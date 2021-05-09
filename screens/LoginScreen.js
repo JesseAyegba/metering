@@ -1,15 +1,72 @@
-import React from "react";
-import { View, Text, StyleSheet, StatusBar } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, TextInput, StyleSheet, StatusBar } from "react-native";
+import { ActivityIndicator } from "react-native";
+import { Button, Image } from "react-native-elements";
 
-const LoginScreen = ({ navigation }) => {
-    return(
-        <View>
-            <StatusBar style="light" />
-            <Text>I am the Login Screen</Text>
-        </View>
-    )
+export default function LoginScreen({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handlePress = () => {
+      navigation.navigate("Register");
+  }
+
+//   useEffect(() => {
+//     navigation.screenOptions({ })
+//   }, [])
+  return (
+    <View style={styles.container}>
+      <StatusBar style="light" />
+      <Text style={styles.header}>Secure Login</Text>
+      <View style={styles.inputContainer}>
+        <TextInput
+          onChangeText={(email) => setEmail(email)}
+          style={styles.input}
+          placeholder="Email"
+          type="email"
+          value={email}
+        />
+        <TextInput
+          onChangeText={(password) => setPassword(password)}
+          style={styles.input}
+          placeholder="Password"
+          secureTextEntry
+          type="password"
+          value={password}
+        />
+      </View>
+      <Button containerStyle={styles.button} title="LOGIN" />
+      <Button onPress={() => handlePress()} containerStyle={styles.button} title="REGISTER" type="outline" />
+    </View>
+  );
 }
 
-export default LoginScreen;
-
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  header: {
+    fontSize: 45,
+    color: "#04040D",
+    marginBottom: 15,
+  },
+  input: {
+    width: 300,
+    fontSize: 18,
+    marginBottom: 22,
+    borderBottomWidth: 2,
+    borderTopWidth: 2,
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
+    borderRadius: 4,
+    borderColor: "gray",
+    padding: 10,
+    height: 60,
+  },
+  button: {
+    width: 300,
+    marginBottom: 10,
+  },
+});

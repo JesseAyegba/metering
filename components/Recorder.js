@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
+import { Button } from "react-native-elements";
 import { Audio } from "expo-av";
 
-function Recorder() {
+export default function Recorder() {
   const [recording, setRecording] = useState();
 
   async function startRecording() {
@@ -37,6 +38,7 @@ function Recorder() {
   return (
     <View style={styles.container}>
       <Button
+        styleContainer={styles.buttonStyle}
         title={recording ? "Stop Recording" : "Start Recording"}
         onPress={recording ? stopRecording : startRecording}
       />
@@ -44,11 +46,9 @@ function Recorder() {
   );
 }
 
-export default Recorder;
-
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#ecf0f1",
-    padding: 10,
+  container: {},
+  buttonStyle: {
+    backgroundColor: "#1873FB",
   },
 });

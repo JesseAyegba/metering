@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { Audio } from 'expo-av';
 
-function Player() {
+export default function Player() {
   const [sound, setSound] = useState();
 
   async function playSound() {
@@ -29,8 +29,6 @@ function Player() {
     </View>
   );
 }
-
-export default Player;
 
 const styles = StyleSheet.create({
   container: {

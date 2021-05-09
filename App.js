@@ -5,6 +5,7 @@ import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
 import RecordScreen from "./screens/RecordScreen";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
@@ -13,24 +14,24 @@ const Stack = createStackNavigator();
 
 const globalScreenOptions = {
   headerStyle: { backgroundColor: "#04040D" },
-  headerTitleStyle: { color: "white", alignSelf: "center", },
+  headerTitleStyle: { color: "white" },
+  // headerTitleStyle: { color: "white", alignSelf: "center", },
   headerTintColor: "white",
 };
 
-function App() {
+export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={globalScreenOptions}>
-          <Stack.Screen name="Record" component={RecordScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="Record" component={RecordScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
   );
 }
-
-export default App;
 
 const styles = StyleSheet.create({
   container: {
