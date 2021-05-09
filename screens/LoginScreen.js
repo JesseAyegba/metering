@@ -1,19 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, StyleSheet, StatusBar } from "react-native";
-import { ActivityIndicator } from "react-native";
-import { Button, Image } from "react-native-elements";
+import { Button } from "react-native-elements";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handlePress = () => {
-      navigation.navigate("Register");
-  }
-
-//   useEffect(() => {
-//     navigation.screenOptions({ })
-//   }, [])
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
@@ -36,7 +28,12 @@ export default function LoginScreen({ navigation }) {
         />
       </View>
       <Button containerStyle={styles.button} title="LOGIN" />
-      <Button onPress={() => handlePress()} containerStyle={styles.button} title="REGISTER" type="outline" />
+      <Button
+        onPress={() => navigation.navigate("Register")}
+        containerStyle={styles.button}
+        title="REGISTER"
+        type="outline"
+      />
     </View>
   );
 }
