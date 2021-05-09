@@ -10,6 +10,10 @@ export default function RecordScreen({ navigation }) {
       index: 0,
       routes: [{ name: "Record" }],
     });
+
+    // navigation.setOptions({
+    //   headerLeft: ()
+    // })
     
   }, [])
   return (
