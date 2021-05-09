@@ -5,6 +5,13 @@ import { StatusBar } from "expo-status-bar";
 import Recorder from "../components/Recorder";
 
 export default function RecordScreen({ navigation }) {
+  useEffect(() => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Record" }],
+    });
+    
+  }, [])
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
@@ -12,9 +19,7 @@ export default function RecordScreen({ navigation }) {
       <Button
         styleContainer={styles.buttonContainer}
         title="Login"
-        onPress={() => navigation.navigate("Login")}
       />
-      <Button />
     </View>
   );
 };

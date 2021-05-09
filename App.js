@@ -13,8 +13,8 @@ import { store } from "./store/store";
 const Stack = createStackNavigator();
 
 const globalScreenOptions = {
-  headerStyle: { backgroundColor: "#04040D" },
-  headerTitleStyle: { color: "white" },
+  headerStyle: { backgroundColor: "#04040D", height: 150 },
+  headerTitleStyle: { color: "white", fontSize: 30 },
   headerTintColor: "white",
 };
 

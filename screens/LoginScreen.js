@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, StyleSheet, StatusBar } from "react-native";
 import { Button } from "react-native-elements";
+import { auth } from "../firebase";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            navigation.replace("Record");
+        }
+    })
+  }, []);
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
@@ -25,9 +33,10 @@ export default function LoginScreen({ navigation }) {
           secureTextEntry
           type="password"
           value={password}
+          onSubmitEditing={() => login()}
         />
       </View>
-      <Button containerStyle={styles.button} title="LOGIN" />
+      <Button onPress={() => login()} containerStyle={styles.button} title="LOGIN" />
       <Button
         onPress={() => navigation.navigate("Register")}
         containerStyle={styles.button}

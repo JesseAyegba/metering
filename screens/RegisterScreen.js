@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import { Button } from "react-native-elements";
+import { auth } from "../firebase";
+import { StatusBar } from "expo-status-bar";
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState("");
@@ -8,11 +10,31 @@ export default function RegisterScreen({ navigation }) {
   const [password, setPassword] = useState("");
 
   const register = () => {
-    alert("Yay you just submitted something");
+    auth
+      .createUserWithEmailAndPassword(email.trim(), password)
+      .then((userCredential) => {
+        userCredential.user.updateProfile({
+          displayName: name,
+        });
+      })
+      .catch((errors) => alert(errors.message));
   };
 
+  useEffect(() => {
+    navigation.setOptions({
+      title: "",
+    });
+  }, []);
+  useEffect(() => {
+      auth.onAuthStateChanged((user) => {
+          if (user) {
+              navigation.replace("Record");
+          }
+      });
+  });
   return (
     <View style={styles.container}>
+      <StatusBar style="light" />
       <Text style={styles.header}>Register</Text>
       <View style={styles.inpuContainer}>
         <TextInput
