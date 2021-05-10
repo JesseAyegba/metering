@@ -14,6 +14,11 @@ export default function LoginScreen({ navigation }) {
         }
     })
   }, []);
+
+  const signIn = () => {
+    auth.signInWithEmailAndPassword(email.trim(), password)  
+     .catch((error) => alert(error.message))
+  }
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
@@ -33,14 +38,14 @@ export default function LoginScreen({ navigation }) {
           secureTextEntry
           type="password"
           value={password}
-          onSubmitEditing={() => login()}
+          onSubmitEditing={() => signIn()}
         />
       </View>
-      <Button onPress={() => login()} containerStyle={styles.button} title="LOGIN" />
+      <Button onPress={() => signIn()} containerStyle={styles.button} title="Login" />
       <Button
         onPress={() => navigation.navigate("Register")}
         containerStyle={styles.button}
-        title="REGISTER"
+        title="Register"
         type="outline"
       />
     </View>

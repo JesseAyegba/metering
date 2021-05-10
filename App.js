@@ -1,4 +1,4 @@
-// import "react-native-gesture-handler";
+import "react-native-gesture-handler";
 import React from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import { StatusBar } from "expo-status-bar";
@@ -13,8 +13,8 @@ import { store } from "./store/store";
 const Stack = createStackNavigator();
 
 const globalScreenOptions = {
-  headerStyle: { backgroundColor: "#04040D", height: 150 },
-  headerTitleStyle: { color: "white", fontSize: 30 },
+  headerStyle: { backgroundColor: "#04040D", height: 110 },
+  headerTitleStyle: { color: "white", fontSize: 20 },
   headerTintColor: "white",
 };
 

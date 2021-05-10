@@ -1,7 +1,12 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Image } from "react-native";
 import { Button } from "react-native-elements";
 import { Audio } from "expo-av";
+import { FontAwesome } from "@expo/vector-icons";
+import { Feather } from '@expo/vector-icons'; 
+import { Foundation } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import mic from "../assets/mic.png";
 
 export default function Recorder() {
   const [recording, setRecording] = useState();
@@ -37,18 +42,37 @@ export default function Recorder() {
 
   return (
     <View style={styles.container}>
-      <Button
+      {/* <Button
         styleContainer={styles.buttonStyle}
         title={recording ? "Stop Recording" : "Start Recording"}
         onPress={recording ? stopRecording : startRecording}
-      />
+      /> */}
+      {/* <View style={styles.micContainer}>
+        <MaterialCommunityIcons name="microphone" size={250} color="#fff784" />
+      </View> */}
+      <Image style={{marginTop: 150 }} source={mic}/>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+    alignItems: "center",
+  },
   buttonStyle: {
     backgroundColor: "#1873FB",
+  },
+  micContainer: {
+    width: 300,
+    height: 300,
+    borderBottomWidth: 4,
+    borderTopWidth: 4,
+    borderLeftWidth: 4,
+    borderRightWidth: 4,
+    borderRadius: 300,
+    borderColor: "gray",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

@@ -63,7 +63,7 @@ export default function RegisterScreen({ navigation }) {
         <Button
           onPress={() => register()}
           containerStyle={styles.button}
-          title="REGISTER"
+          title="Register"
         />
       </View>
     </View>
