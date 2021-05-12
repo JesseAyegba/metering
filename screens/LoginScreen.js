@@ -23,41 +23,46 @@ export default function LoginScreen({ navigation }) {
       .signInWithEmailAndPassword(email.trim(), password)
       .catch((error) => alert(error.message));
   };
-  return (
-    <View style={styles.container}>
-      <StatusBar style="light" />
-      <Text style={styles.header}>Secure Login</Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          onChangeText={(email) => setEmail(email)}
-          style={styles.input}
-          placeholder="Email"
-          type="email"
-          value={email}
+
+  if (activity) {
+    return <Activity />;
+  } else {
+    return (
+      <View style={styles.container}>
+        <StatusBar style="light" />
+        <Text style={styles.header}>Secure Login</Text>
+        <View style={styles.inputContainer}>
+          <TextInput
+            onChangeText={(email) => setEmail(email)}
+            style={styles.input}
+            placeholder="Email"
+            type="email"
+            value={email}
+          />
+          <TextInput
+            onChangeText={(password) => setPassword(password)}
+            style={styles.input}
+            placeholder="Password"
+            secureTextEntry
+            type="password"
+            value={password}
+            onSubmitEditing={() => signIn()}
+          />
+        </View>
+        <Button
+          onPress={() => signIn()}
+          containerStyle={styles.button}
+          title="Login"
         />
-        <TextInput
-          onChangeText={(password) => setPassword(password)}
-          style={styles.input}
-          placeholder="Password"
-          secureTextEntry
-          type="password"
-          value={password}
-          onSubmitEditing={() => signIn()}
+        <Button
+          onPress={() => navigation.navigate("Register")}
+          containerStyle={styles.button}
+          title="Register"
+          type="outline"
         />
       </View>
-      <Button
-        onPress={() => signIn()}
-        containerStyle={styles.button}
-        title="Login"
-      />
-      <Button
-        onPress={() => navigation.navigate("Register")}
-        containerStyle={styles.button}
-        title="Register"
-        type="outline"
-      />
-    </View>
-  );
+    );
+  }
 }
 
 const styles = StyleSheet.create({
