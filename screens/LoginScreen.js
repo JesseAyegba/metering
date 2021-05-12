@@ -2,23 +2,27 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, StyleSheet, StatusBar } from "react-native";
 import { Button } from "react-native-elements";
 import { auth } from "../firebase";
+import { useSelector, useDispatch } from "react-redux";
+import Activity from "../components/Activity";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  let activity = useSelector((globalState) => globalState.activityReducer);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
-        if (user) {
-            navigation.replace("Record");
-        }
-    })
+      if (user) {
+        navigation.replace("Record");
+      }
+    });
   }, [navigation]);
 
   const signIn = () => {
-    auth.signInWithEmailAndPassword(email.trim(), password)  
-     .catch((error) => alert(error.message))
-  }
+    auth
+      .signInWithEmailAndPassword(email.trim(), password)
+      .catch((error) => alert(error.message));
+  };
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
@@ -41,7 +45,11 @@ export default function LoginScreen({ navigation }) {
           onSubmitEditing={() => signIn()}
         />
       </View>
-      <Button onPress={() => signIn()} containerStyle={styles.button} title="Login" />
+      <Button
+        onPress={() => signIn()}
+        containerStyle={styles.button}
+        title="Login"
+      />
       <Button
         onPress={() => navigation.navigate("Register")}
         containerStyle={styles.button}
