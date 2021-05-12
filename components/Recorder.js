@@ -1,26 +1,73 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
-import { Button } from "react-native-elements";
+import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Audio } from "expo-av";
-import { FontAwesome } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
-import { Foundation } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import mic from "../assets/mic.png";
-import * as DocumentPicker from 'expo-document-picker';
-import { storage } from "../firebase";
+import { storage, auth, db } from "../firebase";
 
 export default function Recorder() {
   const [recording, setRecording] = useState();
 
-  const uploadAudio = async (uri) => {
-    const response = await fetch(uri);
-    const blob = await response.blob();
+  const createUploadRecord = async (fileName, audioUrl) => {
+    const currentUserEmail = auth.currentUser.email;
 
-    const storageRef = storage.ref();
-    const imageRef = storageRef.child("audio/test-audio")
-    return imageRef.put(blob);
-  }
+    try {
+      await db
+        .collection("users")
+        .doc(currentUserEmail)
+        .collection("audioRecordings")
+        .doc(fileName)
+        .set({
+          fileName: fileName,
+          audioUrl: audioUrl,
+          date: new Date(),
+        });
+
+      alert("Audio upload was successful");
+    } catch (errors) {
+      alert("Audio Record creation was not successful");
+    }
+  };
+
+  // Function responsible for uploading
+  // recorded audio to the cloud
+  //  and returning the audio link
+
+  const uploadAudio = async (uri) => {
+    try {
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      const randomString = Math.random().toString(36).substring(7);
+      const todaysDate = new Date()
+        .toISOString()
+        .slice(0, 10)
+        .replace(/-/g, "");
+      const storageRef = storage.ref();
+
+      // Current logged in user
+
+      const loggedInUserUsername = auth.currentUser.displayName;
+      const loggedInUserUsernameCompressed = loggedInUserUsername
+        .replace(/\s+/g, "")
+        .trim();
+      const audioFileName = `${loggedInUserUsernameCompressed}${todaysDate}${randomString}`;
+
+      // Firebase storage Reference
+
+      const audioRef = storageRef.child(`audio/${audioFileName}`);
+      await audioRef.put(blob);
+
+      const audioUrl = await audioRef.getDownloadURL();
+
+      // Call the function that actually creates
+      // the database record
+      /////////////////////////////
+      console.log(audioUrl);
+      ///////////////////
+      createUploadRecord(audioFileName, audioUrl);
+    } catch (errors) {
+      alert("Audio upload was not successful");
+    }
+  };
 
   async function startRecording() {
     try {
@@ -50,43 +97,49 @@ export default function Recorder() {
     const uri = recording.getURI();
     console.log("Recording stopped and stored at", uri);
     console.log("Upload starting.....");
-    uploadAudio(uri).then(() => {
-      Alert.alert("Audio Upload Successful");
-    }).catch((error) => Alert.alert("Could not upload audio"))
+
+    // Start Upload to the Cloud
+
+    uploadAudio(uri);
   }
 
-  const handlePress = async () => {
-    try{
-      const options = {
-        type: "image/*",
-        copyToCacheDirectory: true,
-        multiple: false,
-
-      }
-      const response = await DocumentPicker.getDocumentAsync(options);
-      Alert.alert("Image selected successfully. Upload in Progress...");
-      uploadImage(response.uri).then(() => {
-        Alert.alert("Image successfully uploaded to firebase");
-      }).catch((error) => Alert.alert(error))
+  const handlePress = () => {
+    if (recording) {
+      stopRecording();
+    } else {
+      startRecording();
     }
-    catch (errors) {
-      alert(errors);
-    }
-  }
+  };
 
   return (
     <View style={styles.container}>
-      <Button
-        styleContainer={styles.buttonStyle}
-        title={recording ? "Stop Recording" : "Start Recording"}
-        onPress={recording ? stopRecording : startRecording}
-      />
-      {/* <View style={styles.micContainer}>
-        <MaterialCommunityIcons name="microphone" size={250} color="#fff784" />
-      </View> */}
-      {/* <TouchableOpacity onPress={() => handlePress()}>
-        <Image style={{ marginTop: 150 }} source={mic} />
-      </TouchableOpacity> */}
+      {recording ? (
+        <Text style={{ color: "white", fontSize: 18 }}>Recording</Text>
+      ) : (
+        <Text style={{ color: "white", fontSize: 18 }}>
+          Tap to start recording
+        </Text>
+      )}
+      <TouchableOpacity
+        style={
+          recording
+            ? {
+                ...styles.micContainer,
+                borderColor: "red",
+                width: 350,
+                height: 350,
+                borderRadius: 350,
+                borderBottomWidth: 8,
+                borderTopWidth: 8,
+                borderLeftWidth: 8,
+                borderRightWidth: 8,
+              }
+            : { ...styles.micContainer }
+        }
+        onPress={() => handlePress()}
+      >
+        <Image source={mic} />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -103,6 +156,7 @@ const styles = StyleSheet.create({
   micContainer: {
     width: 300,
     height: 300,
+    marginTop: 50,
     borderBottomWidth: 4,
     borderTopWidth: 4,
     borderLeftWidth: 4,

@@ -13,7 +13,7 @@ export default function LoginScreen({ navigation }) {
             navigation.replace("Record");
         }
     })
-  }, []);
+  }, [navigation]);
 
   const signIn = () => {
     auth.signInWithEmailAndPassword(email.trim(), password)  

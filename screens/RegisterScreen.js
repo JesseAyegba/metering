@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import { Button } from "react-native-elements";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import { StatusBar } from "expo-status-bar";
 
 export default function RegisterScreen({ navigation }) {
@@ -9,15 +9,27 @@ export default function RegisterScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const register = () => {
-    auth
-      .createUserWithEmailAndPassword(email.trim(), password)
-      .then((userCredential) => {
-        userCredential.user.updateProfile({
-          displayName: name,
-        });
+  const register = async () => {
+    try {
+      const userCredential = await auth.createUserWithEmailAndPassword(
+        email.trim(),
+        password
+      );
+      userCredential.user.updateProfile({
+        displayName: name
       })
-      .catch((errors) => alert(errors.message));
+      db.collection("users").doc(userCredential.user.email).set({
+        email: userCredential.user.email,
+
+      }).then(() => {
+        alert("Your account was successfully created");
+      }).catch((error) => {
+        alert(error.message);
+      })
+
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   useEffect(() => {
@@ -26,11 +38,11 @@ export default function RegisterScreen({ navigation }) {
     });
   }, []);
   useEffect(() => {
-      auth.onAuthStateChanged((user) => {
-          if (user) {
-              navigation.replace("Record");
-          }
-      });
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation.replace("Record");
+      }
+    });
   });
   return (
     <View style={styles.container}>

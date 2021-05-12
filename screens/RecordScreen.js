@@ -9,15 +9,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function RecordScreen({ navigation }) {
-  const [username, setUserName] = useState("");
-
-  // useEffect(() => {
-  //   auth.onAuthStateChanged((userCredential) => {
-  //     setUserName(userCredential.user.displayName);
-  //     alert("You are amazing");
-  //   });
-  // }, [])
-
   const signOut = () => {
     auth
       .signOut()
@@ -60,12 +51,11 @@ export default function RecordScreen({ navigation }) {
         </View>
       ),
     });
-  }, []);
+  }, [navigation]);
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
       <Recorder />
-      <Text style={{ color: "white" }}>{username}</Text>
     </View>
   );
 }
