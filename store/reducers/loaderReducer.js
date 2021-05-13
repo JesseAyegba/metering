@@ -1,4 +1,4 @@
-export const activityReducer = (state=false, action) => {
+export const loaderReducer = (state=false, action) => {
     switch(action.type) {
         case "ACTIVE":
             return true;

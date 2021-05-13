@@ -14,7 +14,7 @@ const Stack = createStackNavigator();
 
 const globalScreenOptions = {
   headerStyle: { backgroundColor: "#04040D", height: 110 },
-  headerTitleStyle: { color: "white", fontSize: 20 },
+  headerTitleStyle: { color: "white", fontSize: 20, alignSelf: "center" },
   headerTintColor: "white",
 };
 
@@ -31,12 +31,3 @@ export default function App() {
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "pink",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

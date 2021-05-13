@@ -3,31 +3,42 @@ import { View, Text, StyleSheet, TextInput } from "react-native";
 import { Button } from "react-native-elements";
 import { auth, db } from "../firebase";
 import { StatusBar } from "expo-status-bar";
+import { useSelector, useDispatch } from "react-redux";
+import { loaderActive, loaderInActive } from "../store/actions/loaderAction";
+import Activity from "../components/Activity";
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  let activity = useSelector((globalState) => globalState.loaderReducer);
+  let dispatch = useDispatch();
 
   const register = async () => {
+    dispatch(loaderActive());
     try {
       const userCredential = await auth.createUserWithEmailAndPassword(
         email.trim(),
         password
       );
       userCredential.user.updateProfile({
-        displayName: name
-      })
-      db.collection("users").doc(userCredential.user.email).set({
-        email: userCredential.user.email,
-
-      }).then(() => {
-        alert("Your account was successfully created");
-      }).catch((error) => {
-        alert(error.message);
-      })
-
+        displayName: name,
+      });
+      db.collection("users")
+        .doc(userCredential.user.email)
+        .set({
+          email: userCredential.user.email,
+        })
+        .then(() => {
+          dispatch(loaderInActive());
+          alert("Your account was successfully created");
+        })
+        .catch((error) => {
+          dispatch(loaderInActive());
+          alert(error.message);
+        });
     } catch (error) {
+      dispatch(loaderInActive());
       alert(error.message);
     }
   };
@@ -40,10 +51,12 @@ export default function RegisterScreen({ navigation }) {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
+        dispatch(loaderInActive());
         navigation.replace("Record");
       }
     });
   });
+
   return (
     <View style={styles.container}>
       <StatusBar style="light" />

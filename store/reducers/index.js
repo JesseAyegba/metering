@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import { activityReducer } from "./activityReducer";
+import { loaderReducer } from "./loaderReducer";
 
 export const rootReducer = combineReducers({
-    activityReducer: activityReducer,
+    loaderReducer: loaderReducer,
 });

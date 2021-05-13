@@ -3,13 +3,15 @@ import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Audio } from "expo-av";
 import mic from "../assets/mic.png";
 import { storage, auth, db } from "../firebase";
+import { loaderActive, loaderInActive } from "../store/actions/loaderAction";
+import { useDispatch } from "react-redux";
 
 export default function Recorder() {
   const [recording, setRecording] = useState();
+  let dispatch = useDispatch();
 
   const createUploadRecord = async (fileName, audioUrl) => {
     const currentUserEmail = auth.currentUser.email;
-
     try {
       await db
         .collection("users")
@@ -21,9 +23,10 @@ export default function Recorder() {
           audioUrl: audioUrl,
           date: new Date(),
         });
-
+      dispatch(loaderInActive());
       alert("Audio upload was successful");
     } catch (errors) {
+      dispatch(loaderInActive());
       alert("Audio Record creation was not successful");
     }
   };
@@ -33,6 +36,7 @@ export default function Recorder() {
   //  and returning the audio link
 
   const uploadAudio = async (uri) => {
+    dispatch(loaderActive());
     try {
       const response = await fetch(uri);
       const blob = await response.blob();
@@ -60,11 +64,10 @@ export default function Recorder() {
 
       // Call the function that actually creates
       // the database record
-      /////////////////////////////
-      console.log(audioUrl);
-      ///////////////////
+
       createUploadRecord(audioFileName, audioUrl);
     } catch (errors) {
+      dispatch(loaderInActive());
       alert("Audio upload was not successful");
     }
   };

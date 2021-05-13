@@ -4,13 +4,16 @@ import { Button } from "react-native-elements";
 import { auth } from "../firebase";
 import { useSelector, useDispatch } from "react-redux";
 import Activity from "../components/Activity";
+import { loaderActive, loaderInActive } from "../store/actions/loaderAction";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  let activity = useSelector((globalState) => globalState.activityReducer);
+  let activity = useSelector((globalState) => globalState.loaderReducer);
   let dispatch = useDispatch();
 
+  // useEffect that controls navigation
+  // when a user signs in
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -18,20 +21,30 @@ export default function LoginScreen({ navigation }) {
       }
     });
   }, [navigation]);
+
+  // useEffect that removes the navigation header
+  //  when the activity loader is in progress
   useEffect(() => {
     navigation.setOptions({
-      title: (activity ? "" : "Login")
-    })
-  }, [activity])
-  const signIn = () => {
-    dispatch({type: "ACTIVE"});
-    auth
-      .signInWithEmailAndPassword(email.trim(), password)
-      .catch((error) => alert(error.message));
+      title: activity ? "" : "Login",
+    });
+  }, [activity]);
+
+  const signIn = async () => {
+    const trimmedEmail = email.trim();
+    
+    try {
+      dispatch(loaderActive());
+      await auth.signInWithEmailAndPassword(trimmedEmail, password);
+      dispatch(loaderInActive());
+    } catch (error) {
+      dispatch(loaderInActive());
+      alert(error.message);
+    }
   };
 
   if (activity) {
-    return <Activity />;
+    return <Activity navigation={navigation} text="Signing in" />;
   } else {
     return (
       <View style={styles.container}>
