@@ -9,6 +9,7 @@ export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   let activity = useSelector((globalState) => globalState.activityReducer);
+  let dispatch = useDispatch();
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -17,8 +18,13 @@ export default function LoginScreen({ navigation }) {
       }
     });
   }, [navigation]);
-
+  useEffect(() => {
+    navigation.setOptions({
+      title: (activity ? "" : "Login")
+    })
+  }, [activity])
   const signIn = () => {
+    dispatch({type: "ACTIVE"});
     auth
       .signInWithEmailAndPassword(email.trim(), password)
       .catch((error) => alert(error.message));

@@ -2,16 +2,18 @@ import React from "react";
 import { View, ActivityIndicator, StyleSheet } from "react-native";
 
 export default function Activity() {
-    return(
-        <View style={styles.container}>
-            <ActivityIndicator />
-        </View>
-    )
+  return (
+    <View style={styles.container}>
+      <ActivityIndicator color="white" size="large" />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-    }
-})
+  container: {
+    flex: 1,
+    backgroundColor: "#04040D",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
