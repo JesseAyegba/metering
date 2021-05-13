@@ -56,43 +56,46 @@ export default function RegisterScreen({ navigation }) {
       }
     });
   });
-
-  return (
-    <View style={styles.container}>
-      <StatusBar style="light" />
-      <Text style={styles.header}>Register</Text>
-      <View style={styles.inpuContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Full Name"
-          type="text"
-          onChangeText={(name) => setName(name)}
-          value={name}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          type="email"
-          onChangeText={(email) => setEmail(email)}
-          value={email}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          type="password"
-          secureTextEntry
-          onChangeText={(password) => setPassword(password)}
-          value={password}
-          onSubmitEditing={() => register()}
-        />
-        <Button
-          onPress={() => register()}
-          containerStyle={styles.button}
-          title="Register"
-        />
+  if (activity) {
+    return <Activity text="Creating your account" />;
+  } else {
+    return (
+      <View style={styles.container}>
+        <StatusBar style="light" />
+        <Text style={styles.header}>Register</Text>
+        <View style={styles.inpuContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Full Name"
+            type="text"
+            onChangeText={(name) => setName(name)}
+            value={name}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            type="email"
+            onChangeText={(email) => setEmail(email)}
+            value={email}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            type="password"
+            secureTextEntry
+            onChangeText={(password) => setPassword(password)}
+            value={password}
+            onSubmitEditing={() => register()}
+          />
+          <Button
+            onPress={() => register()}
+            containerStyle={styles.button}
+            title="Register"
+          />
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
 }
 
 const styles = StyleSheet.create({
