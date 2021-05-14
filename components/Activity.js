@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { useSelector } from "react-redux";
 
 export default function Activity({ text }) {
   return (

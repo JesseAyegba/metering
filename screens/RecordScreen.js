@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { View, FlatList, Text, StyleSheet, TextInput } from "react-native";
-import { Button, withTheme } from "react-native-elements";
+import React, { useEffect } from "react";
+import { View, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Recorder from "../components/Recorder";
 import { auth } from "../firebase";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import Activity from "../components/Activity";
 import { useSelector } from "react-redux";
 import HeaderIcon from "../components/HeaderIcon";
