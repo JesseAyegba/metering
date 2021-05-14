@@ -14,6 +14,7 @@ export default function LoginScreen({ navigation }) {
 
   // useEffect that controls navigation
   // when a user signs in
+  
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -24,11 +25,15 @@ export default function LoginScreen({ navigation }) {
 
   // useEffect that removes the navigation header
   //  when the activity loader is in progress
+
   useEffect(() => {
     navigation.setOptions({
       title: activity ? "" : "Login",
     });
   }, [activity]);
+
+  // function that signs a user into 
+  // the application
 
   const signIn = async () => {
     const trimmedEmail = email.trim();

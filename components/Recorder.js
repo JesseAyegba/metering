@@ -10,6 +10,9 @@ export default function Recorder() {
   const [recording, setRecording] = useState();
   let dispatch = useDispatch();
 
+  // function that ties the uploaded audio file
+  // to a user in the firestore
+
   const createUploadRecord = async (fileName, audioUrl) => {
     const currentUserEmail = auth.currentUser.email;
     try {
@@ -32,8 +35,8 @@ export default function Recorder() {
   };
 
   // Function responsible for uploading
-  // recorded audio to the cloud
-  //  and returning the audio link
+  // recorded audio to firebase storage
+  // and returning the audio link
 
   const uploadAudio = async (uri) => {
     dispatch(loaderActive());
@@ -101,7 +104,7 @@ export default function Recorder() {
     console.log("Recording stopped and stored at", uri);
     console.log("Upload starting.....");
 
-    // Start Upload to the Cloud
+    // Start Upload to the firebase storage
 
     uploadAudio(uri);
   }
