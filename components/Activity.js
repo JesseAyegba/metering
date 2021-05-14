@@ -7,7 +7,7 @@ export default function Activity({ text }) {
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
-      <Text style={{ color: "white", fontSize: 15, marginBottom: 10 }}>
+      <Text style={{ color: "white", fontSize: 15, marginBottom: 10, fontWeight: "bold" }}>
         {text}
       </Text>
       <ActivityIndicator color="white" size="large" />

@@ -6,6 +6,8 @@ import { StatusBar } from "expo-status-bar";
 import { useSelector, useDispatch } from "react-redux";
 import { loaderActive, loaderInActive } from "../store/actions/loaderAction";
 import Activity from "../components/Activity";
+import HeaderIcon from "../components/HeaderIcon";
+import { Feather } from '@expo/vector-icons'; 
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState("");
@@ -43,11 +45,23 @@ export default function RegisterScreen({ navigation }) {
     }
   };
 
+  const goBacktoLogin = () => {
+    navigation.replace("Login");
+  }
+
   useEffect(() => {
     navigation.setOptions({
       title: "",
+      headerLeft: () => (
+        <HeaderIcon 
+        eventHandler={goBacktoLogin}
+        myStyle={{ marginLeft: 30, width: 30 }}
+        icon={<Feather name="arrow-left" size={24} color="white" />}
+        />
+      )
     });
   }, []);
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -67,6 +81,7 @@ export default function RegisterScreen({ navigation }) {
           <TextInput
             style={styles.input}
             placeholder="Full Name"
+            placeholderTextColor="gray"
             type="text"
             onChangeText={(name) => setName(name)}
             value={name}
@@ -74,6 +89,7 @@ export default function RegisterScreen({ navigation }) {
           <TextInput
             style={styles.input}
             placeholder="Email"
+            placeholderTextColor="gray"
             type="email"
             onChangeText={(email) => setEmail(email)}
             value={email}
@@ -81,6 +97,7 @@ export default function RegisterScreen({ navigation }) {
           <TextInput
             style={styles.input}
             placeholder="Password"
+            placeholderTextColor="gray"
             type="password"
             secureTextEntry
             onChangeText={(password) => setPassword(password)}
@@ -103,27 +120,34 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#04040D",
   },
   header: {
-    fontSize: 45,
-    color: "#04040D",
+    fontSize: 35,
+    fontWeight: "bold",
+    color: "white",
     marginBottom: 15,
   },
   input: {
-    width: 300,
+    width: 350,
     fontSize: 18,
+    fontWeight: "bold",
     marginBottom: 22,
     borderBottomWidth: 2,
     borderTopWidth: 2,
     borderLeftWidth: 2,
     borderRightWidth: 2,
-    borderRadius: 4,
+    borderRadius: 10,
     borderColor: "gray",
     padding: 10,
     height: 60,
+    color: "white",
   },
   button: {
-    width: 300,
+    width: 350,
+    marginTop: 10,
     marginBottom: 10,
+    borderRadius: 10,
+    fontWeight: "bold",
   },
 });

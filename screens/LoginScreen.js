@@ -32,7 +32,7 @@ export default function LoginScreen({ navigation }) {
 
   const signIn = async () => {
     const trimmedEmail = email.trim();
-    
+
     try {
       dispatch(loaderActive());
       await auth.signInWithEmailAndPassword(trimmedEmail, password);
@@ -55,6 +55,7 @@ export default function LoginScreen({ navigation }) {
             onChangeText={(email) => setEmail(email)}
             style={styles.input}
             placeholder="Email"
+            placeholderTextColor="gray"
             type="email"
             value={email}
           />
@@ -62,6 +63,7 @@ export default function LoginScreen({ navigation }) {
             onChangeText={(password) => setPassword(password)}
             style={styles.input}
             placeholder="Password"
+            placeholderTextColor="gray"
             secureTextEntry
             type="password"
             value={password}
@@ -73,8 +75,9 @@ export default function LoginScreen({ navigation }) {
           containerStyle={styles.button}
           title="Login"
         />
+        <Text style={{color: "white", marginBottom: 20,}}>Or</Text>
         <Button
-          onPress={() => navigation.navigate("Register")}
+          onPress={() => navigation.replace("Register")}
           containerStyle={styles.button}
           title="Register"
           type="outline"
@@ -89,27 +92,33 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#04040D",
   },
   header: {
-    fontSize: 45,
-    color: "#04040D",
+    fontSize: 35,
+    fontWeight: "bold",
+    color: "white",
     marginBottom: 15,
   },
   input: {
-    width: 300,
+    width: 350,
     fontSize: 18,
+    fontWeight: "bold",
     marginBottom: 22,
     borderBottomWidth: 2,
     borderTopWidth: 2,
     borderLeftWidth: 2,
     borderRightWidth: 2,
-    borderRadius: 4,
+    borderRadius: 10,
     borderColor: "gray",
     padding: 10,
     height: 60,
+    color: "white",
   },
   button: {
-    width: 300,
-    marginBottom: 10,
+    width: 350,
+    marginBottom: 30,
+    marginTop: 10,
+    borderRadius: 10,
   },
 });
