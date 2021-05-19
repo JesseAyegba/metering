@@ -5,6 +5,7 @@ import mic from "../assets/mic.png";
 import { storage, auth, db } from "../firebase";
 import { loaderActive, loaderInActive } from "../store/actions/loaderAction";
 import { useDispatch } from "react-redux";
+import { RecordingOptions } from "../jessebase/recordingOptions";
 
 export default function Recorder() {
   const [recording, setRecording] = useState();
@@ -85,9 +86,7 @@ export default function Recorder() {
       });
       console.log("Starting recording..");
       const recording = new Audio.Recording();
-      await recording.prepareToRecordAsync(
-        Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
-      );
+      await recording.prepareToRecordAsync(RecordingOptions);
       await recording.startAsync();
       setRecording(recording);
       console.log("Recording started");
