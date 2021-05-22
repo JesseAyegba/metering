@@ -75,7 +75,8 @@ export default function Recorder() {
     }
   };
 
-  async function startRecording() {
+  // Function from expo-av
+  const startRecording = async () => {
     try {
       console.log("Requesting permissions..");
       await Audio.requestPermissionsAsync();
@@ -96,7 +97,8 @@ export default function Recorder() {
     }
   }
 
-  async function stopRecording() {
+  // Function from expo-av
+  const stopRecording = async () => {
     console.log("Stopping recording..");
     setRecording(undefined);
     await recording.stopAndUnloadAsync();
