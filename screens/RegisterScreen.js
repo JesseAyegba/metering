@@ -32,7 +32,12 @@ export default function RegisterScreen({ navigation }) {
       db.collection("users")
         .doc(userCredential.user.email)
         .set({
+          displayName: userCredential.user.displayName,
           email: userCredential.user.email,
+          isAdmin: false,
+          isSuperUser: false,
+          isOwner: false,
+          dateJoined: new Date(),
         })
         .then(() => {
           dispatch(loaderInActive());
