@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { loaderActive, loaderInActive } from "../store/actions/loaderAction";
 import Activity from "../components/Activity";
 import HeaderIcon from "../components/HeaderIcon";
-import { Feather } from '@expo/vector-icons'; 
+import { Feather } from "@expo/vector-icons";
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState("");
@@ -60,12 +60,12 @@ export default function RegisterScreen({ navigation }) {
     navigation.setOptions({
       title: "",
       headerLeft: () => (
-        <HeaderIcon 
-        eventHandler={goBacktoLogin}
-        myStyle={{ marginLeft: 30, width: 30 }}
-        icon={<Feather name="arrow-left" size={24} color="white" />}
+        <HeaderIcon
+          eventHandler={goBacktoLogin}
+          myStyle={{ marginLeft: 30, width: 30 }}
+          icon={<Feather name="arrow-left" size={24} color="white" />}
         />
-      )
+      ),
     });
   }, []);
 
@@ -81,10 +81,10 @@ export default function RegisterScreen({ navigation }) {
       }
     });
   });
-  
+
   const goBacktoLogin = () => {
     navigation.replace("Login");
-  }
+  };
 
   if (activity) {
     return <Activity text="Creating your account" />;

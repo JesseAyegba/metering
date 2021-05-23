@@ -95,7 +95,7 @@ export default function Recorder() {
     } catch (err) {
       console.error("Failed to start recording", err);
     }
-  }
+  };
 
   // Function from expo-av
   const stopRecording = async () => {
@@ -109,7 +109,7 @@ export default function Recorder() {
     // Start Upload to the firebase storage
 
     uploadAudio(uri);
-  }
+  };
 
   const handlePress = () => {
     if (recording) {

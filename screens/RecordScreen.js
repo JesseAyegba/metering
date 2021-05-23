@@ -22,7 +22,7 @@ export default function RecordScreen({ navigation }) {
   };
 
   // useEffect that sets the navigation header
-  // options to blank when the activity loader 
+  // options to blank when the activity loader
   // is in progress
   useEffect(() => {
     navigation.setOptions({
