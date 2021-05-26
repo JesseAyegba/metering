@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, StyleSheet, StatusBar } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  StatusBar,
+  KeyboardAvoidingView,
+} from "react-native";
 import { Button } from "react-native-elements";
 import { auth } from "../firebase";
 import { useSelector, useDispatch } from "react-redux";
@@ -14,7 +21,7 @@ export default function LoginScreen({ navigation }) {
 
   // useEffect that controls navigation
   // when a user signs in
-  
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -32,7 +39,7 @@ export default function LoginScreen({ navigation }) {
     });
   }, [activity]);
 
-  // function that signs a user into 
+  // function that signs a user into
   // the application
 
   const signIn = async () => {
@@ -52,7 +59,7 @@ export default function LoginScreen({ navigation }) {
     return <Activity navigation={navigation} text="Signing in" />;
   } else {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container}>
         <StatusBar style="light" />
         <Text style={styles.header}>Secure Login</Text>
         <View style={styles.inputContainer}>
@@ -80,14 +87,14 @@ export default function LoginScreen({ navigation }) {
           containerStyle={styles.button}
           title="Login"
         />
-        <Text style={{color: "white", marginBottom: 20,}}>Or</Text>
+        <Text style={{ color: "white", marginBottom: 20 }}>Or</Text>
         <Button
           onPress={() => navigation.replace("Register")}
           containerStyle={styles.button}
           title="Register"
           type="outline"
         />
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }

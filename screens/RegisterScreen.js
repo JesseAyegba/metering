@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  KeyboardAvoidingView,
+} from "react-native";
 import { Button } from "react-native-elements";
 import { auth, db } from "../firebase";
 import { StatusBar } from "expo-status-bar";
@@ -90,7 +96,7 @@ export default function RegisterScreen({ navigation }) {
     return <Activity text="Creating your account" />;
   } else {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container}>
         <StatusBar style="light" />
         <Text style={styles.header}>Register</Text>
         <View style={styles.inpuContainer}>
@@ -126,7 +132,7 @@ export default function RegisterScreen({ navigation }) {
             title="Register"
           />
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
