@@ -36,8 +36,7 @@ export default function RegisterScreen({ navigation }) {
         displayName: name,
       });
       db.collection("users")
-        .doc(userCredential.user.email)
-        .set({
+        .add({
           displayName: userCredential.user.displayName,
           email: userCredential.user.email,
           isAdmin: false,
