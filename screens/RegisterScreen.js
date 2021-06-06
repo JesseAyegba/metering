@@ -36,10 +36,10 @@ export default function RegisterScreen({ navigation }) {
         displayName: name,
       });
       db.collection("users")
-        .doc(email.trim())
+        .doc(userCredential.user.email)
         .set({
           displayName: name,
-          email: email.trim(),
+          email: userCredential.user.email,
           isAdmin: false,
           isSuperUser: false,
           isOwner: false,
