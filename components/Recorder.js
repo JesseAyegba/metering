@@ -27,6 +27,11 @@ export default function Recorder() {
           audioUrl: audioUrl,
           date: new Date(),
         });
+      await db.collection("audioRecordings").add({
+        fileName: fileName,
+        audioUrl: audioUrl,
+        date: new Date(),
+      });
       dispatch(loaderInActive());
       alert("Audio upload was successful");
     } catch (errors) {
