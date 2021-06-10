@@ -62,7 +62,7 @@ export default function Recorder() {
       const loggedInUserUsernameCompressed = loggedInUserUsername
         .replace(/\s+/g, "")
         .trim();
-      const audioFileName = `${loggedInUserUsernameCompressed}${todaysDate}${randomString}`;
+      const audioFileName = `${loggedInUserUsernameCompressed}_${todaysDate}_${randomString}`;
 
       // Firebase storage Reference
 
