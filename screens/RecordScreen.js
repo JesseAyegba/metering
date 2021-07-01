@@ -51,7 +51,6 @@ export default function RecordScreen({ navigation }) {
 
   // useEffect that makes the navigation header
   // options visible
-
   if (activity) {
     return <Activity text="Uploading your recording to our secure servers" />;
   } else {

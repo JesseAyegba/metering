@@ -24,7 +24,6 @@ export default function RegisterScreen({ navigation }) {
 
   // Function that creates a new account in firebase
   // auth
-
   const register = async () => {
     dispatch(loaderActive());
     try {
@@ -61,7 +60,6 @@ export default function RegisterScreen({ navigation }) {
 
   // useEffect responsible for changing the screen title
   // when the component mounts
-
   useEffect(() => {
     navigation.setOptions({
       title: "",
@@ -78,7 +76,6 @@ export default function RegisterScreen({ navigation }) {
   // useEffect responsible for navigating to the record
   // screen when a user's account is successfully created
   // and the user is authenticated
-
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
