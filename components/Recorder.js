@@ -25,11 +25,14 @@ export default function Recorder() {
         .set({
           fileName: fileName,
           audioUrl: audioUrl,
+          isAnalyzed: false,
           date: new Date(),
         });
       await db.collection("audioRecordings").add({
+        userEmail: currentUserEmail,
         fileName: fileName,
         audioUrl: audioUrl,
+        isAnalyzed: false,
         date: new Date(),
       });
       dispatch(loaderInActive());
